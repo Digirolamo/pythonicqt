@@ -1,11 +1,13 @@
 """debounce example"""
 import time
 from PySide import QtCore, QtGui
+from examplebase import ExampleBase
 from pythonicqt import debounce
 
-class ExampleWidget(QtGui.QGroupBox):
-    def __init__(self, title="Debounce Example", *args, **kwargs):
-        super(ExampleWidget, self).__init__(title, *args, **kwargs)
+class ExampleWidget(ExampleBase):
+    title="Debounce"
+    def __init__(self, *args, **kwargs):
+        super(ExampleWidget, self).__init__(*args, **kwargs)
         self._layout = QtGui.QVBoxLayout(self)
         self.description_label = QtGui.QLabel(
             "Quickly change spin box values and watch them update.")
@@ -47,3 +49,4 @@ if __name__ == "__main__":
     example_widget = ExampleWidget()
     example_widget.show()
     sys.exit(app.exec_())
+

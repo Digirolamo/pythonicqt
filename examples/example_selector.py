@@ -1,9 +1,12 @@
-"""A window where you can load all examples."""
+"""A window where you can load all examples.
+An example module only needs to be imported for it to be included
+in all the selectable examples (If it properly inherits from the ExampleBase)"""
 import os, sys, types, traceback
 from PySide import QtGui
 from pythonicqt.fileio import load_ui_file
 from examplebase import MetaExample
 import debounce
+
 
 def make_module(name, source):
     """The code in tests is imported as a fake temporary module."""
@@ -13,12 +16,13 @@ def make_module(name, source):
     exec byte_code in module.__dict__
     return module
 
+
 class AllExamples(object):
     """Controller for all example selection."""
     def __init__(self, ui_path):
         self.current_widget = None
         self.example_selector = load_ui_file(ui_path)
-        print MetaExample.all_examples
+        #Add examples autocollected by ExampleBase metaclass
         for module_name, example_class in MetaExample.all_examples.iteritems():
             item = QtGui.QListWidgetItem(example_class.title)
             item.example_module = module_name
@@ -58,11 +62,16 @@ class AllExamples(object):
         """Runs the code in the editor and loads the module as that code."""
         if self.current_widget is not None:
             self.current_widget.deleteLater()
-        print len(MetaExample.all_examples)
+        self.current_widget = None
         code_text = self.example_selector.code_editor.toPlainText()
         item = self.example_selector.example_list.currentItem()
         try:
+            #remove widget before recompiling.
+            if item.example_module in MetaExample.all_examples:
+                del MetaExample.all_examples[item.example_module]
             module = make_module(item.example_module, code_text)
+            if item.example_module not in MetaExample.all_examples:
+                raise ValueError("You must have exactly one object that inherits from ExampleBase!")
             example_widget = MetaExample.all_examples[item.example_module]
             self.current_widget = example_widget()
             self.current_widget.show()
@@ -70,10 +79,14 @@ class AllExamples(object):
             #So the user sees errors they create.
             QtGui.QMessageBox.warning(self.example_selector, "Error", traceback.format_exc())
         
-        
-if __name__ == "__main__":
+    
+def run_examples():
+    """Creates a QApplication and opens the example selector."""
     app = QtGui.QApplication(sys.argv)
     dir_path, file_name =  os.path.split(os.path.abspath(__file__))
     ui_path = os.path.join(dir_path, "examples_ui.ui")
     all_examples = AllExamples(ui_path)
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    run_examples()

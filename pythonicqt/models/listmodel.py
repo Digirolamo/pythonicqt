@@ -15,6 +15,8 @@ class ListModel(QtCore.QAbstractListModel):
     ListChanged = QtCore.Signal(int, object) 
     ListCleared = QtCore.Signal() 
 
+    default_flags = (QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable | 
+                     QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsSelectable)
     default_roles = {}
     def __init__(self, container=None):
         QtCore.QAbstractListModel.__init__(self)
@@ -58,12 +60,24 @@ class ListModel(QtCore.QAbstractListModel):
         row, column = index.row(), index.column()
         if role == QtCore.Qt.EditRole:
             self[row] = value
-            
+            return True
+
+    def flags(self, index):
+        """If no specific flags exist for an item, returns the default
+        flags of attribute self.default_flags."""
+        row = index.row()
+        item_metadata = self.container_meta[row]
+        try:
+            return item_metadata.flags
+        except (KeyError, AttributeError):
+            pass
+        return self.default_flags
+
     def set_default_meta(self, role, value):
         """"""
         
     def set_meta(self, idx, role, value):
-        """Returns a list that...djskfsdf"""
+        """Returns a list that"""
         self.container_meta[idx][role] = value
         index = self.index(idx, 0)
         self.dataChanged.emit(index, index)
@@ -76,6 +90,7 @@ class ListModel(QtCore.QAbstractListModel):
         return self.container.__contains__(*args)
     
     def __delitem__(self, idx):
+        idx = self._convert_idx(idx)
         previous = self.container[idx]
         parent = QtCore.QModelIndex()
         self.beginRemoveRows(parent, idx, idx) 
@@ -86,9 +101,11 @@ class ListModel(QtCore.QAbstractListModel):
         return ret_value
 
     def __getitem__(self, idx):
+        idx = self._convert_idx(idx)
         return self.container.__getitem__(idx)
 
     def __setitem__(self, idx, value):
+        idx = self._convert_idx(idx)
         previous = self.container[idx]
         ret_value = self.container.__setitem__(idx, value)
         index = self.index(idx, 0)
@@ -96,10 +113,23 @@ class ListModel(QtCore.QAbstractListModel):
         self.ListChanged.emit(idx, previous)
         return ret_value
 
+    def _convert_idx(self, idx):
+        """To be compatable with Qt objects, ensure the index is a positive number."""
+        if idx < 0:
+            #idx -1 on a length 10 list is the same as idx 9 (10 + -1)
+            idx = len(self) + idx
+        return idx
+
     def remove(self, item):
         """Removes the first occurence of an item."""
         idx = self.container.index(item)
         del self[idx]
+
+    def pop(self, idx=-1):
+        """Takes an item at the 'idx' index from the list and returns it."""
+        item_to_remove = self.container[idx]
+        del self[idx]
+        return item_to_remove
 
     def clear(self):
         """Clears entire model and emits layout changed"""

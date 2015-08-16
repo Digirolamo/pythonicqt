@@ -10,10 +10,10 @@ import listmodel_example
 import debounce_example
 
 
-
 def make_module(name, source):
-    """The code in tests is imported as a fake temporary module."""
-    module = types.ModuleType( name, source )
+    """Takes in a name and a string of Python code, turns the code into
+    a python module with the name provided. Returns a module object."""
+    module = types.ModuleType(name, source )
     module.__file__ = name + '.pyc'
     byte_code = compile(source, name, 'exec')
     exec byte_code in module.__dict__
@@ -72,6 +72,7 @@ class AllExamples(object):
             #remove widget before recompiling.
             if item.example_module in MetaExample.all_examples:
                 del MetaExample.all_examples[item.example_module]
+            #The code from the QPlainTextEdit is turned into a live python module
             module = make_module(item.example_module, code_text)
             if item.example_module not in MetaExample.all_examples:
                 raise ValueError("You must have exactly one object that inherits from ExampleBase!")

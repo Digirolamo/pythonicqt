@@ -25,23 +25,26 @@ class ListModel(QtCore.QAbstractListModel):
         self.container = container
         self.container_meta = [ItemMetaData() for e in xrange(len(container))] #index to role/flag index
         
-    #QListModel virtual methods
+    #QListModel virtual method
     def headerData(self, section, orientation, role=QtCore.Qt.DisplayRole):
         if orientation == QtCore.Qt.Vertical:
             return unicode(section)
         else:
             return unicode(section)
-    
+
+    #QListModel virtual method
     def rowCount(self, parent=None):
         """Returns the length of the underlying list."""
         if parent is None:
             return 0
         return len(self.container)
     
+    #QListModel virtual method
     def columnCount(self, parent=None):
         """Returns 1 because lists do not have multiple columns."""
         return 1
     
+    #QListModel virtual method
     def data(self, index, role=QtCore.Qt.DisplayRole):
         if not index.isValid():
             return None
@@ -53,7 +56,8 @@ class ListModel(QtCore.QAbstractListModel):
             return item_metadata[role]
         except KeyError as e:
             return None
-        
+
+    #QListModel virtual method  
     def setData(self, index, value, role=QtCore.Qt.EditRole):
         if not index.isValid():
             return None
@@ -61,7 +65,8 @@ class ListModel(QtCore.QAbstractListModel):
         if role == QtCore.Qt.EditRole:
             self[row] = value
             return True
-
+    
+    #QListModel virtual method
     def flags(self, index):
         """If no specific flags exist for an item, returns the default
         flags of attribute self.default_flags."""

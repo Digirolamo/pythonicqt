@@ -1,7 +1,10 @@
 """A window where you can load all examples.
 An example module only needs to be imported for it to be included
 in all the selectable examples (If it properly inherits from the ExampleBase)"""
-import os, sys, types, traceback
+import os
+import sys
+import types
+import traceback
 from PySide import QtGui
 from pythonicqt.fileio import load_ui_file
 from examplebase import MetaExample
@@ -82,15 +85,3 @@ class AllExamples(object):
         except Exception as e:
             #So the user sees errors they create.
             QtGui.QMessageBox.warning(self.example_selector, "Error", traceback.format_exc())
-        
-    
-def run_examples():
-    """Creates a QApplication and opens the example selector."""
-    app = QtGui.QApplication(sys.argv)
-    dir_path, file_name =  os.path.split(os.path.abspath(__file__))
-    ui_path = os.path.join(dir_path, "examples_ui.ui")
-    all_examples = AllExamples(ui_path)
-    sys.exit(app.exec_())
-
-if __name__ == "__main__":
-    run_examples()

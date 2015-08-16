@@ -86,6 +86,15 @@ class ListModel(QtCore.QAbstractListModel):
         self.container_meta[idx][role] = value
         index = self.index(idx, 0)
         self.dataChanged.emit(index, index)
+    # Python Special Methods
+
+    def __eq__(self, *args):
+        """Returns whether this list equals another list."""
+        return self.container.__eq__(*args)
+
+    def __neq__(self, *args):
+        """Returns whether this list is not equal to another list."""
+        return self.container.__neq__(*args)
 
     # Python Sequence Methods
     def __len__(self, *args):

@@ -1,3 +1,4 @@
+Note: We are still moving files over from a private repo into this repo. This project should not be relied upon until the migration is complete. As of 8/16/2015 15% has been moved here.
 #PythonicQt
 A package to make PySide development more Pythonic. 
 

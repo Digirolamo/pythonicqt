@@ -1,13 +1,16 @@
 """debounce example"""
-import time
 from PySide import QtCore, QtGui
 from examplebase import ExampleBase
 from pythonicqt import debounce
 
-class ExampleWidget(ExampleBase):
+class ExampleDebounce(ExampleBase):
+    """This Widget demonstrates the debounce functionality.
+    You can manually change the debounce code in the file
+    to play with different debounce arguments."""
     title="Debounce"
+
     def __init__(self, *args, **kwargs):
-        super(ExampleWidget, self).__init__(*args, **kwargs)
+        super(ExampleDebounce, self).__init__(*args, **kwargs)
         self._layout = QtGui.QVBoxLayout(self)
         self.description_label = QtGui.QLabel(
             "Quickly change spin box values and watch them update.")
@@ -41,12 +44,8 @@ class ExampleWidget(ExampleBase):
     #You can change the debounce arguments to see the effects. 
     @debounce(msecs=200)
     def update_description_debounced(self, value):
+        """Changes the label to reflect the value of the spinbox."""
         self.update_description(value)
 
 if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    example_widget = ExampleWidget()
-    example_widget.show()
-    sys.exit(app.exec_())
-
+    ExampleDebounce.run_example()

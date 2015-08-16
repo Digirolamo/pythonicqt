@@ -5,7 +5,10 @@ import os, sys, types, traceback
 from PySide import QtGui
 from pythonicqt.fileio import load_ui_file
 from examplebase import MetaExample
-import debounce
+#Examples
+import listmodel_example
+import debounce_example
+
 
 
 def make_module(name, source):

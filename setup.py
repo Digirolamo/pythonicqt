@@ -1,14 +1,19 @@
 import os
+import sys
 import json
+from codecs import open
 
 try:
+    raise ImportError('lol')
     from setuptools import setup
+    from setuptools.command.test import test as TestCommand
 except ImportError:
-    from distutils.core import setup
+    from distutils.core import setup, Command
+    TestCommand = Command
 
 version_path = os.path.join("pythonicqt", "_version.py")
 with open(version_path) as f:
-    version = json.load(file)
+    version = '.'.join(unicode(e) for e in json.load(f))
 
 packages = [
     'pythonicqt',
@@ -18,8 +23,27 @@ packages = [
     'pythonicqt.widgets',
 ]
 
-with open('README.md', 'r', 'utf-8') as f:
+with open('README.txt', 'r', 'utf-8') as f:
     readme = f.read()
+
+class PyTest(TestCommand):
+    """Runs the pytest tests."""
+    user_options = []
+
+    def initialize_options(self):
+        self.pytest_args = []
+
+    def finalize_options(self):
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.pytest_args)
+        sys.exit(errno)
+
+    #for disutils Command support
+    run = run_tests
 
 setup(
     name='pythonicqt',
@@ -33,7 +57,9 @@ setup(
     package_data={'': ['LICENSE.txt', 'NOTICE'], 'pythonicqt': ['*.ui']},
     package_dir={'pythonicqt': 'pythonicqt'},
     include_package_data=True,
-    install_requires=['PySide>=1.2.1', 'pytest'],
+    tests_require=['pytest'],
+    cmdclass = {'test': PyTest},
+    install_requires=['PySide>=1.2.1'],
     license='MIT License',
     zip_safe=False,
     classifiers=(

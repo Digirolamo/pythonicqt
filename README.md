@@ -1,8 +1,8 @@
 Note: We are still moving files over from a private repo into this repo. This project should not be relied upon until the migration is complete. As of 8/17/2015 20% has been moved here.
 #PythonicQt
-PythonicQt is an MIT licensed Python package that wraps and expands PySide to make development more Pythonic. 
+PythonicQt is an MIT licensed Python package that wraps and expands PySide to make development more pythonic. 
 
-Many classes in PySide do not fit a Pythonic paradigm. This package aims to subclass PySide classes and provide more python ways of using the classes. For example, having a context manager for the opening of a `QFile`. In addition to enhancing existing PySide classes, the package aims to provide new convenient boilerplate implementations of Models and Widgets. The `ListModel` is an example. A python-like list that is also a `QAbstractListWidget`.
+Many classes in PySide do not fit a Pythonic paradigm. This package aims to subclass PySide classes and provide more python ways of using the classes. For example, having a context manager for the opening of a `QFile`. In addition to enhancing existing PySide classes, the package aims to provide new convenient boilerplate implementations of Models and Widgets. The `ListModel` is an example; it is python-like list that is also a subclass of `QAbstractListModel`.
 
 
 ##Planned/Implemented Features

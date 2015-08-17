@@ -22,7 +22,7 @@ packages = [
     'pythonicqt.widgets',
 ]
 
-with open('README.md', 'r', 'utf-8') as f:
+with open('README', 'r', 'utf-8') as f:
     readme = f.read()
 
 class PyTest(TestCommand):
@@ -53,9 +53,18 @@ setup(
     author_email='CDigirolamo@DigiSpade.com',
     url='https://github.com/Digirolamo/pythonicqt',
     packages=packages,
-    package_data={'': ['LICENSE.txt', 'NOTICE'], 'pythonicqt': ['*.ui']},
-    package_dir={'pythonicqt': 'pythonicqt'},
-    include_package_data=True,
+    package_dir={
+        'pythonicqt': 'pythonicqt',
+        'pythonicqt.examples': 'pythonicqt\\examples'},
+    # "''" means all packages.
+    package_data={'': ['*.ui']},
+    #Apparently if you set include_package_data to True
+    #package_data is NOT included in sdist...
+    #include_package_data=True,
+    
+    #For bsdist the manifest isn't used so we have to collect the license another way.
+    data_files=[('', ['LICENSE.txt'])],
+
     tests_require=['pytest'],
     cmdclass = {'test': PyTest},
     install_requires=['PySide>=1.2.1'],

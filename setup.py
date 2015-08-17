@@ -4,7 +4,6 @@ import json
 from codecs import open
 
 try:
-    raise ImportError('lol')
     from setuptools import setup
     from setuptools.command.test import test as TestCommand
 except ImportError:
@@ -23,7 +22,7 @@ packages = [
     'pythonicqt.widgets',
 ]
 
-with open('README.txt', 'r', 'utf-8') as f:
+with open('README.md', 'r', 'utf-8') as f:
     readme = f.read()
 
 class PyTest(TestCommand):

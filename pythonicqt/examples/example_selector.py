@@ -9,8 +9,8 @@ from PySide import QtGui
 from pythonicqt.fileio import load_ui_file
 from examplebase import MetaExample
 #Examples
-import listmodel_example
-import debounce_example
+import pythonicqt.examples.listmodel_example
+import pythonicqt.examples.debounce_example
 
 
 def make_module(name, source):

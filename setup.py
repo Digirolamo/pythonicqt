@@ -67,7 +67,7 @@ setup(
 
     tests_require=['pytest'],
     cmdclass = {'test': PyTest},
-    install_requires=['PySide>=1.2.1'],
+    install_requires=['PySide>=1.2.1, six>=1.8.0'],
     license='MIT License',
     zip_safe=False,
     classifiers=(
@@ -77,6 +77,8 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+
     ),
 )
     

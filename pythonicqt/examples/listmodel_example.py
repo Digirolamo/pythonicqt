@@ -1,7 +1,7 @@
 """An example of the ListModel."""
 from PySide import QtCore, QtGui
 from pythonicqt import ListModel
-from examplebase import ExampleBase
+from pythonicqt.examples import ExampleBase
 
 class ExampleListModel(ExampleBase):
     """This Widget demonstrates the ListModel functionality.
@@ -29,7 +29,6 @@ class ExampleListModel(ExampleBase):
         self.list_view.setModel(self.list_model)
 
         #Example interaction
-        print self.list_model.pop()
         self.list_model.append("Now Last")
         self.list_model.insert(0, 'Now First')
 

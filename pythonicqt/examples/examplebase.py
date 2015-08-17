@@ -2,6 +2,7 @@
 Auto collects imported examples so the example editor can easily find them."""
 import sys
 from collections import OrderedDict
+import six
 from PySide import QtCore, QtGui
 
 class MetaExample(type(QtCore.Qt)):
@@ -23,10 +24,10 @@ class MetaExample(type(QtCore.Qt)):
             MetaExample.all_examples[cls.__module__] = cls
         type(QtCore.Qt).__init__(cls, name, bases, dct)
 
+@six.add_metaclass(MetaExample)
 class ExampleBase(QtGui.QGroupBox):
     """Having a base example class allows us to extend examples in the future.
     Only one class can inherit from this class in each module."""
-    __metaclass__ = MetaExample
     #override these class attributes.
     title = "Untitled"
 

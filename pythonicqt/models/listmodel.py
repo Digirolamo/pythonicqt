@@ -1,6 +1,7 @@
 """
 Data structures and class that acts like a python list and a Qt QListModel.
 """
+from six.moves import xrange
 from PySide import QtCore
 
 class ItemMetaData(dict):
@@ -23,7 +24,7 @@ class ListModel(QtCore.QAbstractListModel):
         if container is None:
             container = []
         self.container = container
-        self.container_meta = [ItemMetaData() for e in xrange(len(container))] #index to role/flag index
+        self.container_meta = [ItemMetaData() for e in range(len(container))] #index to role/flag index
         
     #QListModel virtual method
     def headerData(self, section, orientation, role=QtCore.Qt.DisplayRole):

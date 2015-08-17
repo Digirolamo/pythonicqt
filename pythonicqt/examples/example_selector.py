@@ -7,7 +7,7 @@ import types
 import traceback
 from PySide import QtGui
 from pythonicqt.fileio import load_ui_file
-from examplebase import MetaExample
+from pythonicqt.examples.examplebase import MetaExample
 #Examples
 import pythonicqt.examples.listmodel_example
 import pythonicqt.examples.debounce_example
@@ -19,7 +19,7 @@ def make_module(name, source):
     module = types.ModuleType(name, source )
     module.__file__ = name + '.pyc'
     byte_code = compile(source, name, 'exec')
-    exec byte_code in module.__dict__
+    exec(byte_code, module.__dict__)
     return module
 
 
@@ -29,7 +29,7 @@ class AllExamples(object):
         self.current_widget = None
         self.example_selector = load_ui_file(ui_path)
         #Add examples autocollected by ExampleBase metaclass
-        for module_name, example_class in MetaExample.all_examples.iteritems():
+        for module_name, example_class in MetaExample.all_examples.items():
             item = QtGui.QListWidgetItem(example_class.title)
             item.example_module = module_name
             self.example_selector.example_list.addItem(item)

@@ -10,8 +10,7 @@ def check_if_all_tests_pass(option='-x'):
        The -s option prints out stdout from the tests (normally hidden.)"""
     import pytest
     options = [option]
-    #dirs = ['core', 'stats', 'widgets']
-    arguments = options# + dirs
+    arguments = options
     exitcode = pytest.main(arguments)
     all_passed = exitcode == 0
     if not all_passed:

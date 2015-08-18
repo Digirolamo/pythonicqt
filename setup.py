@@ -22,7 +22,7 @@ packages = [
     'pythonicqt.widgets',
 ]
 
-with open('README', 'r', 'utf-8') as f:
+with open('README.md', 'r', 'utf-8') as f:
     readme = f.read()
 
 class PyTest(TestCommand):
@@ -67,7 +67,7 @@ setup(
 
     tests_require=['pytest'],
     cmdclass = {'test': PyTest},
-    install_requires=['PySide>=1.2.1, six>=1.8.0'],
+    install_requires=['PySide>=1.2.1', 'six>=1.8.0'],
     license='MIT License',
     zip_safe=False,
     classifiers=(

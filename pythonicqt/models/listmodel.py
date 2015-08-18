@@ -170,7 +170,7 @@ class ListModel(QtCore.QAbstractListModel):
 
     def __ne__(self, *args):
         """Returns whether the underlying list is not equal to another list."""
-        return self._container.__neq__(*args)
+        return self._container.__ne__(*args)
 
     # Python Sequence Methods
     def __len__(self, *args):

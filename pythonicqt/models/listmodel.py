@@ -1,8 +1,8 @@
 """This module contains the Data structures and classes
 that are used to impliment a python list like QAbstractListmodel.
 """
-from abc import ABCMeta
 from collections import MutableSequence
+import six
 from six.moves import xrange
 from PySide import QtCore
 from pythonicqt.baseclasses import QtMetaStitch
@@ -10,7 +10,7 @@ from pythonicqt.baseclasses import QtMetaStitch
 class ItemRoleData(dict):
     """Contains flags and roles"""
 
-
+@six.add_metaclass(QtMetaStitch)
 class BasicListModel(QtCore.QAbstractListModel):
     """An implimentation of a QAbstractListModel using a python list.
 
@@ -36,7 +36,6 @@ class BasicListModel(QtCore.QAbstractListModel):
             an instance with starting values. If provided, a copy of the list is created.
     """
     #So future objects can inherit
-    __metaclass__ = QtMetaStitch
     
     def __init__(self, container=None):
         QtCore.QAbstractListModel.__init__(self)

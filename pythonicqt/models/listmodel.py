@@ -1,6 +1,7 @@
 """This module contains the Data structures and classes
 that are used to impliment a python list like QAbstractListmodel.
 """
+import copy
 from collections import MutableSequence
 import six
 from six.moves import xrange
@@ -31,12 +32,15 @@ class BasicListModel(QtCore.QAbstractListModel):
             and redefine this attribute if you want to use different flags.
         default_roles (dict[ItemRole]): The default roles that all of the items return.
 
-    Args:
+    Keyword Args:
         container (Optional[list]): The first parameter is a list if you want to instantiate
             an instance with starting values. If provided, a copy of the list is created.
     """
     #So future objects can inherit
-    
+    default_flags = (QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable | 
+                     QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsSelectable)
+    default_roles = {}
+
     def __init__(self, container=None):
         QtCore.QAbstractListModel.__init__(self)
         if container is None:
@@ -138,6 +142,32 @@ class BasicListModel(QtCore.QAbstractListModel):
         index = self.index(idx, 0)
         self.dataChanged.emit(index, index)
 
+    def __copy__(self, deep_copy_memo=None):
+        """Makes a shallow copy of the list and returns a new model of it.
+        
+        Keyword Args:
+            deep_copy_memo (Optional[dict]): Only to be used by a __deepcopy__
+                implimentation. If deep_copy_memo is not None, it should be the 
+                memo argument of __deep__ copy. 
+        """
+        cls = self.__class__
+        if deep_copy_memo is None:
+            #a bit redundant considerint __init__ copies anyway, but to be safe.
+            container = copy.copy(self._container)
+        else:
+            container = copy.deepcopy(self._container, deep_copy_memo)
+        new_instance = cls(self._container)
+        #only need to copy if the instance set the flags/roles
+        if hasattr(self.__dict__, 'default_flags'):
+            new_instance.default_flags = self.default_flags
+        if hasattr(self.__dict__, 'default_roles'):
+            new_instance.default_roles = self.default_roles
+        return new_instance
+
+    def __deepcopy__(self, memo):
+        """Makes a deepcopy of the list and returns a new model of it."""
+        return self.__copy__(deep_copy_memo=memo)
+
 
 class ListModel(MutableSequence, BasicListModel):
     """A python list like implimentation of a QAbstractListModel.
@@ -157,10 +187,7 @@ class ListModel(MutableSequence, BasicListModel):
     ListChanged = QtCore.Signal(int, object) 
     ListCleared = QtCore.Signal() 
 
-    default_flags = (QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable | 
-                     QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsSelectable)
-    default_roles = {}
-
+    
     def _convert_idx(self, idx):
         """To be compatable with Qt objects, ensure the index is a positive number.
         Used for python index operations."""

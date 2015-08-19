@@ -87,6 +87,8 @@ class BasicListModel(QtCore.QAbstractListModel):
         row, column = index.row(), index.column()
         if role == QtCore.Qt.DisplayRole:
             return unicode(self._container[row])
+        elif role == QtCore.Qt.EditRole: 
+            return self._container[row]
         item_metadata = self.container_meta[row]
         try:
             return item_metadata[role]

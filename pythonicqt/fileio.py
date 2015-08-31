@@ -1,6 +1,6 @@
 """File and IO related classes and functions."""
 from contextlib import closing
-from PySide import QtCore, QtGui, QtUiTools
+from pythonicqt.Qt import QtCore, QtGui, QtUiTools
 
 
 class File(QtCore.QFile):

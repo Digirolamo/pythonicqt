@@ -3,7 +3,7 @@ Auto collects imported examples so the example editor can easily find them."""
 import sys
 from collections import OrderedDict
 import six
-from PySide import QtCore, QtGui
+from pythonicqt.Qt import QtCore, QtGui
 
 class MetaExample(type(QtCore.Qt)):
     """Stores subclasses in a OrderedDict for easy collection.

@@ -1,5 +1,5 @@
 """debounce example"""
-from PySide import QtCore, QtGui
+from pythonicqt.Qt import QtCore, QtGui
 from pythonicqt.examples import ExampleBase
 from pythonicqt import debounce
 

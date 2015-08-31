@@ -5,7 +5,7 @@ the ListModel class.
 
 import six
 from collections import MutableSequence
-from PySide import QtCore
+from pythonicqt.Qt import QtCore
 from pythonicqt.baseclasses import QtMetaStitch
 from pythonicqt.models.modelitems import ItemContainer
 

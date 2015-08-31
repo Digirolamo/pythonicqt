@@ -5,7 +5,7 @@ You can run this file by writing "python -m pythonicqt.examples"
 """
 import os
 import sys
-from PySide import QtGui
+from pythonicqt.Qt import QtGui
 from pythonicqt.examples.example_selector import AllExamples
 
 def run_examples():

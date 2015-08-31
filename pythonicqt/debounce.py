@@ -1,7 +1,7 @@
 """module contains datastructures needed to create the @debounce decorator."""
 import time
 from functools import wraps, partial
-from PySide import QtCore
+from pythonicqt.Qt import QtCore
 
 class DebounceTimer(QtCore.QTimer):
     """Used with the debounce decorator, used for delaying/throttling calls."""

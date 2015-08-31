@@ -1,5 +1,5 @@
 """An example of the ListModel."""
-from PySide import QtCore, QtGui
+from pythonicqt.Qt import QtCore, QtGui
 from pythonicqt import ListModel
 from pythonicqt.examples import ExampleBase
 

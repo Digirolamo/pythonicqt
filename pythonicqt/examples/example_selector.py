@@ -5,7 +5,7 @@ import os
 import sys
 import types
 import traceback
-from PySide import QtGui
+from pythonicqt.Qt import QtGui
 from pythonicqt.fileio import load_ui_file
 from pythonicqt.examples.examplebase import MetaExample
 #Examples

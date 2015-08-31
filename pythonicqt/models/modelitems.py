@@ -3,7 +3,7 @@ hold the flags and data roles of items in models.
 
 """
 
-from PySide import QtCore
+from pythonicqt.Qt import QtCore
 
 
 class ItemContainer(dict):

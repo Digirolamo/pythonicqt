@@ -1,8 +1,11 @@
+"""This is the setup file intented to be used with setuptools or distutils.
+"""
 import os
 import sys
 import json
 from codecs import open
 
+#For both setuptools and distutils compatability
 try:
     from setuptools import setup
     from setuptools.command.test import test as TestCommand
